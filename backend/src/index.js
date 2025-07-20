@@ -14,10 +14,14 @@ const port = process.env.PORT;
 const __dirname = path.resolve();
 
 connectDB();
-app.use(cors({
-    origin: "http://localhost:5173", // Adjust this to your frontend URL
+
+const corsOptions = {
+    origin: process.env.NODE_ENV === "production" 
+        ? process.env.FRONTEND_URL || "https://your-production-domain.com"
+        : "http://localhost:5173", // Adjust this to your frontend URL
     credentials: true, // Allow cookies to be sent with requests
-}));
+};
+app.use(cors(corsOptions));
 app.use(express.json({limit: "50mb"})); // Increase the limit for larger payloads
 app.use(express.urlencoded({extended: true, limit: "50mb"})); // Increase the
 app.use(cookieParser());

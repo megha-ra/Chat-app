@@ -1,22 +1,47 @@
 {
   "name": "linkup-realtime-chat-webapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "LinkUp - Real-time Chat Web Application",
   "main": "index.js",
   "scripts": {
-    "dev" : "npm run dev --prefix backend",
-    "build" : "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "npm run start --prefix backend"
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"green,blue\" \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "npm run start:backend",
+    "start:prod": "concurrently -n \"BACKEND,FRONTEND\" -c \"green,blue\" \"npm run start --prefix backend\" \"npm run start --prefix frontend\"",
+    "start:backend": "npm run start --prefix backend",
+    "start:frontend": "npm run start --prefix frontend",
+    "clean": "rimraf backend/node_modules frontend/node_modules node_modules",
+    "clean:install": "npm run clean && npm run install:all",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/megha-ra/LinkUp-RealTime-Chat-Webapp.git"
   },
-  "keywords": [],
+  "keywords": [
+    "chat",
+    "realtime",
+    "websocket",
+    "socket.io",
+    "react",
+    "node.js",
+    "mongodb"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/megha-ra/LinkUp-RealTime-Chat-Webapp/issues"
   },
-  "homepage": "https://github.com/megha-ra/LinkUp-RealTime-Chat-Webapp#readme"
+  "homepage": "https://github.com/megha-ra/LinkUp-RealTime-Chat-Webapp#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
 }
